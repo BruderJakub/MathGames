@@ -1,0 +1,169 @@
+/* Main component container */
+.DiceRoller {
+    max-width: 600px;
+    width: 90%;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    background-color: #ffffff;
+    text-align: center;
+    margin: 20px auto; /* Center the component and add vertical margin */
+}
+
+/* Title and header section */
+.title h2 {
+    color: #2c3e50; /* Darker blue/gray for primary text */
+    margin-bottom: 10px;
+    font-size: 2.5em; /* Slightly larger title */
+    border-bottom: 3px solid #3498db; /* Blue underline */
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+.title a {
+    display: block;
+    color: #7f8c8d; /* Muted gray for description */
+    margin-bottom: 25px;
+    font-size: 1.1em;
+}
+
+/* Roll message area */
+.rollers > a { /* Target the rollMsg display */
+    display: block;
+    font-size: 1.6em; /* Slightly larger roll message */
+    font-weight: bold;
+    color: #28a745; /* Red for emphasis on the roll */
+    margin-bottom: 30px;
+    min-height: 1.6em; /* Prevent layout shift when empty */
+    text-align: center;
+}
+
+/* Game area container */
+.game-area {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Add space between the two boxes */
+}
+
+/* Player and Bot display area */
+.player, .bot {
+    padding: 10px; /* Reduced padding */
+    margin: 10px 0; /* Reduced margin */
+    border-radius: 8px; /* Slightly less rounded corners */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1; /* Make them share the space equally */
+}
+
+.player {
+    background-color: #f8faff; /* Very light blue background for player section */
+    border: 1px solid #d0e6ff; /* Softer blue border */
+}
+
+.bot {
+    background-color: #f0f5f9; /* Very light gray-blue for bot section */
+    font-size: 1.2em; /* Slightly smaller font */
+    font-weight: 600;
+    color: #3a4a5a; /* Darker text for better contrast */
+    padding: 12px; /* Reduced padding */
+    border: 1px solid #c2d9f2; /* Softer blue border */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    .game-area {
+        flex-direction: column;
+    }
+}
+
+
+.playerDisplay a {
+    font-size: 1.4em; /* Smaller player score */
+    font-weight: bold;
+    color: #2980b9; /* Blue for player score */
+    margin-bottom: 10px; /* Reduced margin */
+    display: block;
+}
+
+/* Player buttons container */
+.playerButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px; /* Slightly increased gap */
+    margin-top: 15px;
+}
+
+/* Individual roll buttons */
+.playerButton {
+    background-color: #3498db; /* Primary button color (Blue) */
+    color: white;
+    border: none;
+    padding: 12px 20px; /* Increased padding */
+    border-radius: 6px; /* Slightly more rounded corners */
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smoother transitions */
+    flex-grow: 1;
+    min-width: 90px; /* Slightly larger min-width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+}
+
+.playerButton:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+}
+
+.playerButton:active {
+    transform: translateY(0); /* Reset transform on click */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow on click */
+}
+
+.playerButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Win/Tie message display */
+div > a:last-child { /* Targets the winMsg display */
+    display: block;
+    font-size: 2em; /* Slightly smaller win/tie message */
+    font-weight: bolder;
+    margin-top: 20px; /* Reduced margin */
+    color: #28a745; /* A slightly darker, more vibrant green */
+    min-height: 2em; /* Reserve space */
+    text-align: center; /* Ensure it's centered */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 500px) {
+    .playerButtons {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px; /* Adjusted gap */
+    }
+
+    .playerButton {
+        width: 100%;
+        padding: 10px 15px; /* Adjusted padding for smaller screens */
+    }
+
+    .DiceRoller {
+        padding: 20px; /* Adjusted padding for smaller screens */
+    }
+
+    .title h2 {
+        font-size: 2em;
+    }
+
+    .rollers > a {
+        font-size: 1.2em;
+    }
+
+    div > a:last-child {
+        font-size: 1.6em; /* Smaller on mobile */
+    }
+}

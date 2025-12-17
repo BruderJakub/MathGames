@@ -1,0 +1,219 @@
+/* Base styles for the game container */
+.num-guessr-container {
+  display: flex;
+  flex-direction: column; /* Mobile: Grid above questions */
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Grid styles for mobile */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 2px; /* Smaller gap for mobile */
+  width: 100%; /* Take full width */
+  max-width: 400px; /* Max width for grid on mobile */
+  margin-bottom: 1rem; /* Space between grid and questions */
+}
+
+.grid-number {
+  width: 100%; /* Fill grid cell */
+  padding-bottom: 100%; /* Create square cells */
+  position: relative;
+  background-color: lightgreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  font-size: 0.8em; /* Smaller font for mobile */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.grid-number span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grid-number.eliminated {
+  background-color: white;
+}
+
+/* Questions container for mobile */
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px; /* Max width for questions on mobile */
+}
+
+.question {
+  margin-bottom: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.question input {
+  margin-right: 0;
+  margin-bottom: 0.5rem;
+  width: calc(100% - 2px); /* Adjust for border */
+  padding: 0.5rem;
+}
+
+.question button {
+  width: 100%;
+  padding: 0.6rem;
+}
+
+/* Navbar styles (Mobile-First) */
+.navbar {
+  background-color: #333;
+  padding: 1rem;
+  color: white;
+  display: flex;
+  flex-direction: row; /* Changed to row for mobile */
+  justify-content: space-between; /* Push items apart */
+  align-items: center; /* Vertically center items */
+  position: relative; /* For absolute positioning of nav-links when open */
+}
+
+.hamburger-menu {
+  display: flex; /* Visible by default on mobile */
+  flex-direction: column;
+  cursor: pointer;
+  /* Removed absolute positioning */
+  z-index: 1000;
+}
+
+.hamburger-menu .bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none; /* Hidden by default on mobile */
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  background-color: #444;
+  /* Position absolutely below the navbar when open */
+  position: absolute;
+  top: 100%; /* Position below the navbar */
+  left: 0;
+  z-index: 999; /* Below hamburger, above other content */
+}
+
+.nav-links.open {
+  display: flex; /* Show when menu is open */
+}
+
+.nav-links li {
+  margin: 0;
+  width: 100%;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  display: block;
+  border-bottom: 1px solid #555;
+}
+
+.nav-links a:hover {
+  background-color: #555;
+  border-radius: 0;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 769px) {
+  /* Navbar for larger screens */
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hamburger-menu {
+    display: none; /* Hide hamburger on large screens */
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    background-color: transparent;
+    margin-top: 0;
+    position: static; /* Revert positioning for large screens */
+  }
+
+  .nav-links li {
+    margin-right: 1rem;
+    width: auto;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 1rem;
+    border-bottom: none;
+    border-radius: 4px;
+  }
+
+  /* Game layout for larger screens */
+  .num-guessr-container {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .grid-container {
+    gap: 5px;
+    width: auto;
+    max-width: none;
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+
+  .grid-number {
+    width: 40px;
+    height: 40px;
+    padding-bottom: 0;
+    position: static;
+    font-size: 1em;
+  }
+
+  .grid-number span {
+    position: static;
+    transform: none;
+  }
+
+  .questions-container {
+    width: auto;
+    max-width: none;
+  }
+
+  .question {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .question input {
+    margin-right: 10px;
+    margin-bottom: 0;
+    width: auto;
+    padding: 0.6em 1.2em;
+  }
+
+  .question button {
+    width: auto;
+    padding: 0.6em 1.2em;
+  }
+}
