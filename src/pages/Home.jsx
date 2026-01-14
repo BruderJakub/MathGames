@@ -7,6 +7,7 @@ function Home() {
         <div>
             <h1>Welcome to the GameHub!</h1>
             <p>Click the link below to start playing.</p>
+            <p>More games coming soon :)</p>
         </div>
         <div className="links">
             <Link to="/numguessrgame" style={{display: 'block'}}>Play NumGuessr</Link>
