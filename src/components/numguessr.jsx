@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './NumGuessr.css'
 
 const initialState = {
     secretNumber: Math.floor(Math.random() * 100) + 1,
@@ -74,78 +75,84 @@ function NumGuessr() {
 
     return (
         <div className="num-guessr-container">
-            <div className="grid-container">
-                {Array.from({ length: 100 }, (_, i) => i + 1).map((number) => (
-                    <div
-                        key={number}
-                        className={`grid-number ${state.eliminatedNumbers.includes(number) ? 'eliminated' : ''}`}
-                        onClick={() => handleNumberClick(number)}
-                    >
-                        <span>{number}</span>
-                    </div>
-                ))}
+            <div className="title">
+                <h2>NumGuessr</h2>
+                <p>Guess the number!</p>
             </div>
-            <div className="questions-container">
-                <div className="question">
-                    <button onClick={checkEven}>Is the number even or odd?</button>
-                    {state.isEven !== null && <p>{state.isEven ? 'Even' : 'Odd'}</p>}
+            <div className="num-guessr-css">
+                <div className="grid-container">
+                    {Array.from({ length: 100 }, (_, i) => i + 1).map((number) => (
+                        <div
+                            key={number}
+                            className={`grid-number ${state.eliminatedNumbers.includes(number) ? 'eliminated' : ''}`}
+                            onClick={() => handleNumberClick(number)}
+                        >
+                            <span>{number}</span>
+                        </div>
+                    ))}
                 </div>
-                <div className="question">
-                    <input
-                        type="number"
-                        value={state.isSmaller.input}
-                        onChange={(e) => handleInputChange('isSmaller', e.target.value)}
-                        placeholder="Enter a number"
-                    />
-                    <button onClick={checkSmaller}>Is the number smaller than the input?</button>
-                    {state.isSmaller.result !== null && <p>{state.isSmaller.result ? 'Yes' : 'No'}</p>}
-                </div>
-                <div className="question">
-                    <input
-                        type="number"
-                        value={state.isBigger.input}
-                        onChange={(e) => handleInputChange('isBigger', e.target.value)}
-                        placeholder="Enter a number"
-                    />
-                    <button onClick={checkBigger}>Is this number bigger than the input?</button>
-                    {state.isBigger.result !== null && <p>{state.isBigger.result ? 'Yes' : 'No'}</p>}
-                </div>
-                <div className="question">
-                    <input
-                        type="number"
-                        value={state.isDivisible.input}
-                        onChange={(e) => handleInputChange('isDivisible', e.target.value)}
-                        placeholder="Enter a number"
-                    />
-                    <button onClick={checkDivisible}>Is this number divisible by the input?</button>
-                    {state.isDivisible.result !== null && <p>{state.isDivisible.result ? 'Yes' : 'No'}</p>}
-                </div>
-                <div className="question">
-                    <input
-                        type="number"
-                        value={state.modulo.input}
-                        onChange={handleModuloInputChange}
-                        placeholder="Enter a number 1-5"
-                    />
-                    <button onClick={checkModulo}>What is the rest if the number is modulo'd by the input?</button>
-                    {state.modulo.result !== null && <p>{state.modulo.result}</p>}
-                </div>
-                <div className="question">
-                    <button onClick={checkPrime}>Is the number a prime number?</button>
-                    {state.isPrime !== null && <p>{state.isPrime ? 'Yes' : 'No'}</p>}
-                </div>
-                <div className="question">
-                    <input
-                        type="number"
-                        value={state.solution.input}
-                        onChange={(e) => handleInputChange('solution', e.target.value)}
-                        placeholder="Enter a number"
-                    />
-                    <button onClick={checkSolution}>Enter your number</button>
-                    {state.msg}
-                </div>
-                <div className="question">
-                    <button onClick={resetGame}>New Game</button>
+                <div className="questions-container">
+                    <div className="question">
+                        <button onClick={checkEven}>Is the number even or odd?</button>
+                        {state.isEven !== null && <p>{state.isEven ? 'Even' : 'Odd'}</p>}
+                    </div>
+                    <div className="question">
+                        <input
+                            type="number"
+                            value={state.isSmaller.input}
+                            onChange={(e) => handleInputChange('isSmaller', e.target.value)}
+                            placeholder="Enter a number"
+                        />
+                        <button onClick={checkSmaller}>Is the number smaller than the input?</button>
+                        {state.isSmaller.result !== null && <p>{state.isSmaller.result ? 'Yes' : 'No'}</p>}
+                    </div>
+                    <div className="question">
+                        <input
+                            type="number"
+                            value={state.isBigger.input}
+                            onChange={(e) => handleInputChange('isBigger', e.target.value)}
+                            placeholder="Enter a number"
+                        />
+                        <button onClick={checkBigger}>Is this number bigger than the input?</button>
+                        {state.isBigger.result !== null && <p>{state.isBigger.result ? 'Yes' : 'No'}</p>}
+                    </div>
+                    <div className="question">
+                        <input
+                            type="number"
+                            value={state.isDivisible.input}
+                            onChange={(e) => handleInputChange('isDivisible', e.target.value)}
+                            placeholder="Enter a number"
+                        />
+                        <button onClick={checkDivisible}>Is this number divisible by the input?</button>
+                        {state.isDivisible.result !== null && <p>{state.isDivisible.result ? 'Yes' : 'No'}</p>}
+                    </div>
+                    <div className="question">
+                        <input
+                            type="number"
+                            value={state.modulo.input}
+                            onChange={handleModuloInputChange}
+                            placeholder="Enter a number 1-5"
+                        />
+                        <button onClick={checkModulo}>What is the rest if the number is modulo'd by the input?</button>
+                        {state.modulo.result !== null && <p>{state.modulo.result}</p>}
+                    </div>
+                    <div className="question">
+                        <button onClick={checkPrime}>Is the number a prime number?</button>
+                        {state.isPrime !== null && <p>{state.isPrime ? 'Yes' : 'No'}</p>}
+                    </div>
+                    <div className="question">
+                        <input
+                            type="number"
+                            value={state.solution.input}
+                            onChange={(e) => handleInputChange('solution', e.target.value)}
+                            placeholder="Enter a number"
+                        />
+                        <button onClick={checkSolution}>Enter your number</button>
+                        {state.msg}
+                    </div>
+                    <div className="question">
+                        <button onClick={resetGame}>New Game</button>
+                    </div>
                 </div>
             </div>
         </div>
