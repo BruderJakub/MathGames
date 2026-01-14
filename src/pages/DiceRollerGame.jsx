@@ -1,13 +1,12 @@
 import React from 'react';
-import Diceroller from "../components/dicerollr.jsx";
+import DiceRoller from "../components/DiceRoller.jsx";
 
-function NumGuessrGame() {
+function DiceRollerGame() {
     return (
         <div>
-            <h2>Diceroller</h2>
-            <Diceroller />
+            <DiceRoller />
         </div>
     );
 }
 
-export default NumGuessrGame;
+export default DiceRollerGame;

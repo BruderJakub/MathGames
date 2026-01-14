@@ -3,7 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import NumGuessrGame from './pages/NumGuessrGame.jsx';
 import './App.css';
-import Diceroller from "./components/dicerollr.jsx";
+import DiceRollerGame from "./pages/DiceRollerGame.jsx";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ function App() {
                             <Link to="/numguessrgame" onClick={toggleMenu}>NumGuessr</Link>
                         </li>
                         <li>
-                            <Link to="/dicerollrgame" onClick={toggleMenu}>DiceRollr</Link>
+                            <Link to="/dicerollrgame" onClick={toggleMenu}>DiceRoller</Link>
                         </li>
                     </ul>
                 </nav>
@@ -43,7 +43,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/numguessrgame" element={<NumGuessrGame />} />
-                    <Route path="/dicerollrgame" element={<Diceroller />} />
+                    <Route path="/dicerollrgame" element={<DiceRollerGame />} />
                 </Routes>
             </main>
 

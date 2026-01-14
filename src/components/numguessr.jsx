@@ -1,57 +1,75 @@
 import { useState } from 'react';
 
+const initialState = {
+    secretNumber: Math.floor(Math.random() * 100) + 1,
+    eliminatedNumbers: [],
+    isEven: null,
+    isSmaller: { input: '', result: null },
+    isBigger: { input: '', result: null },
+    isDivisible: { input: '', result: null },
+    modulo: { input: '', result: null },
+    isPrime: null,
+    solution: { input: '', result: null },
+    msg: '',
+};
 
 function NumGuessr() {
-    const [secretNumber, setSecretNumber] = useState(() => Math.floor(Math.random() * 100) + 1);
-    const [eliminatedNumbers, setEliminatedNumbers] = useState([]);
-    const [isEven, setIsEven] = useState(null);
-    const [isSmaller, setIsSmaller] = useState({ input: '', result: null });
-    const [isBigger, setIsBigger] = useState({ input: '', result: null });
-    const [isDivisible, setIsDivisible] = useState({ input: '', result: null });
-    const [modulo, setModulo] = useState({ input: '', result: null });
-    const [isPrime, setIsPrime] = useState(null);
-    const [solution, setSolution] = useState({ input: '', result: null });
-    const [msg, setMsg] = useState('');
+    const [state, setState] = useState(initialState);
 
     const handleNumberClick = (number) => {
-        if (!eliminatedNumbers.includes(number)) {
-            setEliminatedNumbers([...eliminatedNumbers, number]);
-        } else {
-            setEliminatedNumbers(eliminatedNumbers.filter((n) => n !== number));
-        }
+        setState((prevState) => ({
+            ...prevState,
+            eliminatedNumbers: prevState.eliminatedNumbers.includes(number)
+                ? prevState.eliminatedNumbers.filter((n) => n !== number)
+                : [...prevState.eliminatedNumbers, number],
+        }));
     };
 
+    const handleInputChange = (field, value) => {
+        setState((prevState) => ({
+            ...prevState,
+            [field]: { ...prevState[field], input: value },
+        }));
+    };
+    
     const handleModuloInputChange = (e) => {
         const value = e.target.value;
         if (value === '' || (/^[1-5]$/.test(value) && value.length === 1)) {
-            setModulo({ ...modulo, input: value });
+            handleInputChange('modulo', value);
         }
     };
 
-    const checkEven = () => setIsEven(secretNumber % 2 === 0);
-    const checkSmaller = () => setIsSmaller({ ...isSmaller, result: secretNumber < parseInt(isSmaller.input) });
-    const checkBigger = () => setIsBigger({ ...isBigger, result: secretNumber > parseInt(isBigger.input) });
-    const checkDivisible = () => setIsDivisible({ ...isDivisible, result: secretNumber % parseInt(isDivisible.input) === 0 });
-    const checkModulo = () => setModulo({ ...modulo, result: secretNumber % parseInt(modulo.input) });
+    const checkEven = () => setState((prevState) => ({ ...prevState, isEven: prevState.secretNumber % 2 === 0 }));
+    const checkSmaller = () => setState((prevState) => ({ ...prevState, isSmaller: { ...prevState.isSmaller, result: prevState.secretNumber < parseInt(prevState.isSmaller.input) } }));
+    const checkBigger = () => setState((prevState) => ({ ...prevState, isBigger: { ...prevState.isBigger, result: prevState.secretNumber > parseInt(prevState.isBigger.input) } }));
+    const checkDivisible = () => setState((prevState) => ({ ...prevState, isDivisible: { ...prevState.isDivisible, result: prevState.secretNumber % parseInt(prevState.isDivisible.input) === 0 } }));
+    const checkModulo = () => setState((prevState) => ({ ...prevState, modulo: { ...prevState.modulo, result: prevState.secretNumber % parseInt(prevState.modulo.input) } }));
     const checkPrime = () => {
-        if (secretNumber <= 1) {
-            setIsPrime(false);
+        if (state.secretNumber <= 1) {
+            setState((prevState) => ({ ...prevState, isPrime: false }));
             return;
         }
-        for (let i = 2; i < secretNumber; i++) {
-            if (secretNumber % i === 0) {
-                setIsPrime(false);
+        for (let i = 2; i < state.secretNumber; i++) {
+            if (state.secretNumber % i === 0) {
+                setState((prevState) => ({ ...prevState, isPrime: false }));
                 return;
             }
         }
-        setIsPrime(true);
+        setState((prevState) => ({ ...prevState, isPrime: true }));
     };
     const checkSolution = () => {
-        if (secretNumber == parseInt(solution.input)) {
-            setMsg('You guessed correctly! :D');
+        if (state.secretNumber == parseInt(state.solution.input)) {
+            setState((prevState) => ({ ...prevState, msg: 'You guessed correctly! :D' }));
         } else {
-            setMsg('You guessed wrong! D:');
+            setState((prevState) => ({ ...prevState, msg: 'You guessed wrong! D:' }));
         }
+    };
+
+    const resetGame = () => {
+        setState({
+            ...initialState,
+            secretNumber: Math.floor(Math.random() * 100) + 1,
+        });
     };
 
     return (
@@ -60,7 +78,7 @@ function NumGuessr() {
                 {Array.from({ length: 100 }, (_, i) => i + 1).map((number) => (
                     <div
                         key={number}
-                        className={`grid-number ${eliminatedNumbers.includes(number) ? 'eliminated' : ''}`}
+                        className={`grid-number ${state.eliminatedNumbers.includes(number) ? 'eliminated' : ''}`}
                         onClick={() => handleNumberClick(number)}
                     >
                         <span>{number}</span>
@@ -70,61 +88,64 @@ function NumGuessr() {
             <div className="questions-container">
                 <div className="question">
                     <button onClick={checkEven}>Is the number even or odd?</button>
-                    {isEven !== null && <p>{isEven ? 'Even' : 'Odd'}</p>}
+                    {state.isEven !== null && <p>{state.isEven ? 'Even' : 'Odd'}</p>}
                 </div>
                 <div className="question">
                     <input
                         type="number"
-                        value={isSmaller.input}
-                        onChange={(e) => setIsSmaller({ ...isSmaller, input: e.target.value })}
+                        value={state.isSmaller.input}
+                        onChange={(e) => handleInputChange('isSmaller', e.target.value)}
                         placeholder="Enter a number"
                     />
                     <button onClick={checkSmaller}>Is the number smaller than the input?</button>
-                    {isSmaller.result !== null && <p>{isSmaller.result ? 'Yes' : 'No'}</p>}
+                    {state.isSmaller.result !== null && <p>{state.isSmaller.result ? 'Yes' : 'No'}</p>}
                 </div>
                 <div className="question">
                     <input
                         type="number"
-                        value={isBigger.input}
-                        onChange={(e) => setIsBigger({ ...isBigger, input: e.target.value })}
+                        value={state.isBigger.input}
+                        onChange={(e) => handleInputChange('isBigger', e.target.value)}
                         placeholder="Enter a number"
                     />
                     <button onClick={checkBigger}>Is this number bigger than the input?</button>
-                    {isBigger.result !== null && <p>{isBigger.result ? 'Yes' : 'No'}</p>}
+                    {state.isBigger.result !== null && <p>{state.isBigger.result ? 'Yes' : 'No'}</p>}
                 </div>
                 <div className="question">
                     <input
                         type="number"
-                        value={isDivisible.input}
-                        onChange={(e) => setIsDivisible({ ...isDivisible, input: e.target.value })}
+                        value={state.isDivisible.input}
+                        onChange={(e) => handleInputChange('isDivisible', e.target.value)}
                         placeholder="Enter a number"
                     />
                     <button onClick={checkDivisible}>Is this number divisible by the input?</button>
-                    {isDivisible.result !== null && <p>{isDivisible.result ? 'Yes' : 'No'}</p>}
+                    {state.isDivisible.result !== null && <p>{state.isDivisible.result ? 'Yes' : 'No'}</p>}
                 </div>
                 <div className="question">
                     <input
                         type="number"
-                        value={modulo.input}
+                        value={state.modulo.input}
                         onChange={handleModuloInputChange}
                         placeholder="Enter a number 1-5"
                     />
                     <button onClick={checkModulo}>What is the rest if the number is modulo'd by the input?</button>
-                    {modulo.result !== null && <p>{modulo.result}</p>}
+                    {state.modulo.result !== null && <p>{state.modulo.result}</p>}
                 </div>
                 <div className="question">
                     <button onClick={checkPrime}>Is the number a prime number?</button>
-                    {isPrime !== null && <p>{isPrime ? 'Yes' : 'No'}</p>}
+                    {state.isPrime !== null && <p>{state.isPrime ? 'Yes' : 'No'}</p>}
                 </div>
                 <div className="question">
                     <input
                         type="number"
-                        value={solution.input}
-                        onChange={(e) => setSolution({ ...solution, input: e.target.value })}
+                        value={state.solution.input}
+                        onChange={(e) => handleInputChange('solution', e.target.value)}
                         placeholder="Enter a number"
                     />
                     <button onClick={checkSolution}>Enter your number</button>
-                    {msg}
+                    {state.msg}
+                </div>
+                <div className="question">
+                    <button onClick={resetGame}>New Game</button>
                 </div>
             </div>
         </div>
